@@ -7,6 +7,12 @@ import wikipedia
 import webbrowser
 import os
 import random
+from turtle import title
+from  win10toast import ToastNotifier
+from pkg_resources import Requirement
+import time
+
+
 
 
 engine = pyttsx3.init('sapi5')
@@ -16,7 +22,7 @@ engine.setProperty('voice', voices[0].id)
 name_email = {
      "gourav": "gouravhds10@gmail.com",
      "ruben" : "rda66@sfu.ca",
-     "kirsh" : "kba89@sfu.ca",
+     "krish" : "kba89@sfu.ca",
      "radhika" : "radhikagaikwad1653@gmail.com",
      "sarthak" : "sarthak.bishnoi@seaspan.com"
 }
@@ -37,8 +43,8 @@ def wish_me(name):
     else:
         speak(f"Good Evening, {name}!")
     
-    print("I am Gourav's AI. How can I assist you today?")
-    speak("I am Gourav's AI. How can I assist you today?")
+    print("I am Gourav's Voice Assistant. How can I assist you today?")
+    speak("I am Gourav's Voice Assistant. How can I assist you today?")
 
 def take_command():
     recognizer = sr.Recognizer()
@@ -53,7 +59,6 @@ def take_command():
         print(f"User said: {command}\n")
     
     except Exception as e:
-        # print(e)
         return "None"
     
     return command.lower()
@@ -63,9 +68,9 @@ def sendEmail(to, subject, message):
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.ehlo()
         server.starttls()
-        server.login("youremail@gmail.com", "yourpassword")  # Replace with your email and password
+        server.login("asd048691@gmail.com", "olfctpcaihfdnerh") 
         email_message = f"Subject: {subject}\n\n{message}"
-        server.sendmail("youremail@gmail.com",to, email_message)  # Replace with your email
+        server.sendmail("asd048691@gmail.com",to, email_message)
         server.close() 
 
 if __name__ == "__main__":
@@ -203,37 +208,28 @@ if __name__ == "__main__":
                     speak("Sorry, I couldn't send the email. Please try again later.")
                     print(f"Error: {e}")
             
-            elif 'set reminder' in query or 'set a reminder' in query:
-                pass
-                #TODO
-                # speak("What would you like to be reminded about?")
-                # reminder = take_command().strip()
+            elif 'set reminder' in query or 'set a reminder' in query:             
+                speak("What would you like to be reminded about?")
+                title = take_command()
 
-                # if reminder != "None" and reminder != "":
-                #     reminder_time = None
-                #     for _ in range(3):
-                #         speak("When should I remind you? Please say the time in HH:MM format, using 24-hour time.")
-                #         time_input = take_command().strip()
-                #         if len(time_input) == 4 and time_input.isdigit():
-                #             try:
-                #                 datetime.datetime.strptime(time_input, "%H:%M")
-                #                 reminder_time = time_input
-                #                 break
-                #             except ValueError:
-                #                 speak("Sorry, I couldn't understand the time. Please try again.")
-                #         else:
-                #             speak("Please say the time as 4 digits, like 0930 for 9:30 AM.")
+                if title != "None" and title != "":
+                    reminder_time = None
+                    
+                    speak("What is the message for the reminder?")
+                    msg= take_command()
 
-                #     if reminder_time:
-                #         # Create the file if it doesn't exist, then append reminder
-                #         with open("reminders.txt", "a") as f:
-                #             f.write(f"{reminder} at {reminder_time}\n")
+                    speak("How many minutes from now would you like to be reminded?Please type in the number.")    
+                    time_in_minutes = float(input("Enter the number of minutes: "))
 
-                #         speak(f"Reminder set for {reminder_time}: {reminder}.")
-                #     else:
-                #         speak("Reminder not set due to invalid time.")
-                # else:
-                #     speak("I didn't catch that. Please try again.")
+                    seconds = int(time_in_minutes) * 60
+                    time.sleep(seconds)
+                    toaster = ToastNotifier()
+                    toaster.show_toast(title, msg, duration=10, threaded=True)
+                    while toaster.notification_active():
+                        time.sleep(0.1) 
+                    
+            elif 'dil ki baat' in query or 'tell me a secret' in query or 'secret' in query:
+                speak("I love you Radhika! You are my sunshine and my everything. I cherish every moment with you, and I am grateful for your love and support. You make my life complete, and I can't imagine a day without you. You are the reason I smile, and I will always be here for you. I love you more than words can express.")
 
             elif 'exit' in query or 'quit' or 'band kar' in query:
                 print("Goodbye! Have a great day!")
