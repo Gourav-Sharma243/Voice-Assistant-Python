@@ -112,6 +112,9 @@ if __name__ == "__main__":
             elif 'open my experience' in query:
                 webbrowser.open("https://myexperience.sfu.ca/myAccount/dashboard.htm")
                 speak("Opening your My Experience SFU page")
+            elif 'open portfolio website' in query:
+                webbrowser.open("https://www.gouravsharma.dev/")
+                speak("Opening your portfolio website")
 
             elif 'time' in query:
                 current_time = datetime.datetime.now().strftime("%H:%M:%S")
